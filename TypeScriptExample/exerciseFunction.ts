@@ -11,14 +11,34 @@ let products: Product[] = [
   { name: "Coffee Maker", price: 2500, category: "Appliances" },
 ];
 
-function FilterAndDiscountProduct(_products: Product[]): Product[] {
-  //filtering product price and discount for n%
-  let discount: number = 0.1;
-  _products = _products.filter((_products) => _products.price > 1200);
-  for (let _product of _products) {
-    _product.price -= _product.price * discount;
-  }
-  return _products;
+//filtering product price and discount for n%
+// function FilterAndDiscountProduct(_products: Product[]): Product[] {
+//   let discount: number = 0.1;
+//   _products = _products.filter((_products) => _products.price > 1200);
+//   for (let _product of _products) {
+//     _product.price -= _product.price * discount;
+//   }
+//   return _products;
+// }
+
+// console.log(FilterAndDiscountProduct(products));
+
+//Create a function for filtering products by price
+function filterProductByPrice(products: Product[], filtPrice: number): Product[] {
+  return products.filter((products) => products.price > filtPrice);
 }
 
-console.log(FilterAndDiscountProduct(products));
+//Create a function for discounting product
+function discountProduct(products: Product[]): Product[] {
+  return products.map((product) => ({
+    ...product,
+    price: product.price * 0.9,
+  }));
+}
+//call function
+let filterProduct = filterProductByPrice(products,2000);
+let discountProducts = discountProduct(filterProduct);
+
+//display result
+//console.log(filterProduct);
+console.log(discountProducts);
