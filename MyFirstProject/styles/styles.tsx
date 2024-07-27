@@ -12,6 +12,8 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     marginRight: 20,
+    borderWidth: 1,
+    borderColor: "#000",
   },
 
   profileContainer: {
