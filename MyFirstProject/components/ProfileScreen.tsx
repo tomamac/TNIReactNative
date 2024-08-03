@@ -1,6 +1,6 @@
-import { View, Text, Image, Button } from "react-native";
+import { View, Text, Image, Button, TextInput } from "react-native";
 import React, { useState } from "react";
-import styles from "../styles/styles";
+import { styles, stylesLogin, stylesPractice } from "../styles/styles";
 
 const ProfileScreen = (): React.JSX.Element => {
   const profileImage = require("../assets/800x800.png");
@@ -30,7 +30,9 @@ const ProfileScreen = (): React.JSX.Element => {
           <Button title="change image" onPress={handleChangeImage} />
         </View>
       </View>
+      
     </View>
+    
   );
 };
 

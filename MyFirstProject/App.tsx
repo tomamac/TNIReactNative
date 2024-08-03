@@ -1,10 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { View, TextInput, Alert } from "react-native";
+import { View, TextInput, Alert,  Button } from "react-native";
 import React, { useState, useEffect } from "react";
 import AppFooter from "./components/AppFooter";
 import AppHeader from "./components/AppHeader";
 import Content from "./components/Content";
-import { styles } from "./styles/styles";
+import ProfileScreen from "./components/ProfileScreen";
+import { stylesLogin, stylesPractice } from "./styles/styles";
 
 export default function App(): React.JSX.Element {
   const [fullname, setFullname] = useState("");
@@ -25,18 +26,30 @@ export default function App(): React.JSX.Element {
     Alert.alert("Hello", `Input your fullname : ${fullname}`);
   };
   return (
-    <View style={styles.container}>
+    <View style={stylesPractice.container}>
       <StatusBar style="auto" />
-      <AppHeader fullname={fullname} message={message} />
+      <ProfileScreen />
+      <View style={stylesLogin.container}>
+          <TextInput
+            style={stylesLogin.input}
+            placeholder="Enter name"
+          />
+          <TextInput
+            style={stylesLogin.input}
+            placeholder="Enter Email"
+          />
+          <Button title="CLICK ME" />
+      </View>
+      {/* <AppHeader fullname={fullname} message={message} /> */}
       {/* <Content message={message} fullname={fullname} /> */}
-      <Content message={message} onButtonClick={handleButtonClick}/>
+      {/* <Content message={message} onButtonClick={handleButtonClick}/>
       <AppFooter footerMessage={footerMessage} />
       <TextInput
-        style={styles.input}
+        style={stylesPractice.input}
         placeholder="Enter your fullname"
         value={fullname}
         onChangeText={setFullname}
-      />
+      /> */}
     </View>
   );
 }
