@@ -3,16 +3,20 @@ import React, { useState } from "react";
 import styles from "../styles/styles";
 
 const ProfileScreen = (): React.JSX.Element => {
-//   const profileImage = require("../assets/800x800.png");
+  const profileImage = require("../assets/800x800.png");
+  const profileImage2 = require("../assets/ProfPic.png");
+
+  const myName = "Warach Weeraphan";
+  const notMyName = "Not Warach";
   const [name, setName] = useState("Warach Weeraphan");
-  const [image, setImage] = useState(require("../assets/800x800.png"));
+  const [image, setImage] = useState(profileImage);
 
   const handleChangeName = () => {
-    setName(name == "Warach Weeraphan" ? "Not Warach" : "Warach Weeraphan");
+    setName(name == myName ? notMyName : myName);
   };
 
   const handleChangeImage = () => {
-    setImage(image == require("../assets/800x800.png") ? require("../assets/ProfPic.png") : require("../assets/800x800.png"));
+    setImage(image == profileImage ? profileImage2 : profileImage);
   };
 
   return (
@@ -22,7 +26,7 @@ const ProfileScreen = (): React.JSX.Element => {
         <View>
           <Text style={styles.profileName}>{name}</Text>
           <Button title="change name" onPress={handleChangeName} />
-          <Text/>
+          <Text />
           <Button title="change image" onPress={handleChangeImage} />
         </View>
       </View>
