@@ -32,13 +32,13 @@ export default function App(): React.JSX.Element {
       <View style={stylesLogin.container}>
           <TextInput
             style={stylesLogin.input}
-            placeholder="Enter name"
+            placeholder="Enter Name"
           />
           <TextInput
             style={stylesLogin.input}
             placeholder="Enter Email"
           />
-          <Button title="CLICK ME" />
+          <Button title="SUBMIT" />
       </View>
       {/* <AppHeader fullname={fullname} message={message} /> */}
       {/* <Content message={message} fullname={fullname} /> */}
