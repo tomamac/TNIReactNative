@@ -1,17 +1,38 @@
 import { StatusBar } from "expo-status-bar";
-import { View } from "react-native";
-import React from "react";
+import { View, TextInput } from "react-native";
+import React, { useState, useEffect } from "react";
 import AppFooter from "./components/AppFooter";
 import AppHeader from "./components/AppHeader";
 import Content from "./components/Content";
+import { styles } from "./styles/styles";
 
 export default function App(): React.JSX.Element {
+  const [fullname, setFullname] = useState("");
+  const [message, setMessage] = useState("Message from App.tsx");
+  const [footerMessage, setFootermessage] = useState(
+    "Thai-Nichi Institute of Technology"
+  );
+
+  useEffect(() => {
+    console.log("Component has mounted");
+  }, []);
+
+  useEffect(() => {
+    console.log(`Fullname has changed to: ${fullname}`);
+  }, [fullname]);
+
   return (
-    <View style={{flex:1,}}>
+    <View style={styles.container}>
       <StatusBar style="auto" />
-      <AppHeader title="Warach Weeraphan" subtitle="Message from App.tsx" />
-      <Content message="Message from App.tsx" name="Warach Weeraphan" />
-      <AppFooter footerText="Thai-Nichi Institute of Techonology" />
+      <AppHeader fullname={fullname} message={message} />
+      <Content message={message} fullname={fullname} />
+      <AppFooter footerMessage={footerMessage} />
+      <TextInput
+        style={styles.input}
+        placeholder="Enter your fullname"
+        value={fullname}
+        onChangeText={setFullname}
+      />
     </View>
   );
 }

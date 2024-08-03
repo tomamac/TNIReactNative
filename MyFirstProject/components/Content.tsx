@@ -1,21 +1,24 @@
 import { View, Text, Button, Alert } from "react-native";
 import React from "react";
-import Styles from "./Styles";
+import { stylesPractice } from "../styles/styles";
 
 type ContentProps = {
   message: string;
-  name: string;
+  fullname: string;
 };
-const Content = ({ message, name }: ContentProps) => {
+const Content = ({ message, fullname }: ContentProps) => {
+  const [displayFullname, setDisplayFullname] = React.useState("");
+
+  const handleButtonClick = () => {
+    setDisplayFullname(fullname);
+    Alert.alert("Hello", `Input your fullname : ${fullname}`);
+  };
+
   return (
-    <View style={Styles.content}>
-      <Text style={Styles.text}>{message}</Text>
-      <Button
-        title="CLICK ME"
-        onPress={() => {
-          Alert.alert("Hello", name);
-        }}
-      />
+    <View style={stylesPractice.content}>
+      <Text style={stylesPractice.text}>{message}</Text>
+      <Text style={stylesPractice.text}>{displayFullname}</Text>
+      <Button title="CLICK ME" onPress={handleButtonClick} />
     </View>
   );
 };

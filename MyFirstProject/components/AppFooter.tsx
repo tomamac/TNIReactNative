@@ -1,15 +1,15 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import Styles from "./Styles";
+import {stylesPractice} from "../styles/styles";
 
 type AppFooterProps = {
-  footerText: string;
+  footerMessage: string;
 };
 
-const AppFooter = ({ footerText }: AppFooterProps): React.JSX.Element => {
+const AppFooter = ({ footerMessage }: AppFooterProps): React.JSX.Element => {
   return (
-    <View style={Styles.footer}>
-      <Text style={Styles.footerText}>{footerText}</Text>
+    <View style={stylesPractice.footer}>
+      <Text style={stylesPractice.footerText}>{footerMessage}</Text>
     </View>
   );
 };
