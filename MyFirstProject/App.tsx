@@ -6,6 +6,7 @@ import AppHeader from "./components/AppHeader";
 import Content from "./components/Content";
 import ProfileScreen from "./components/ProfileScreen";
 import { stylesLogin, stylesPractice } from "./styles/styles";
+import Login from "./components/Login";
 
 export default function App(): React.JSX.Element {
   const [fullname, setFullname] = useState("");
@@ -29,17 +30,7 @@ export default function App(): React.JSX.Element {
     <View style={stylesPractice.container}>
       <StatusBar style="auto" />
       <ProfileScreen />
-      <View style={stylesLogin.container}>
-          <TextInput
-            style={stylesLogin.input}
-            placeholder="Enter Name"
-          />
-          <TextInput
-            style={stylesLogin.input}
-            placeholder="Enter Email"
-          />
-          <Button title="SUBMIT" />
-      </View>
+      <Login />
       {/* <AppHeader fullname={fullname} message={message} /> */}
       {/* <Content message={message} fullname={fullname} /> */}
       {/* <Content message={message} onButtonClick={handleButtonClick}/>
