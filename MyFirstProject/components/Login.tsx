@@ -30,6 +30,8 @@ const Login = (): React.JSX.Element => {
       /*  Alert.alert("Alert","Please Enter Password", [{text: "OK"}]);
           return; //break;*/
       errorMessage += "Please Enter Password\n";
+    } else if (password.length < 6) {
+      errorMessage += "Password must be at lease 6 characters\n";
     }
     if (errorMessage) {
       Alert.alert("Error", errorMessage.trim(), [{ text: "OK" }]);
