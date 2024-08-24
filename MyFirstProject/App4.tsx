@@ -8,7 +8,7 @@ import ProfileScreen from "./components/ProfileScreen";
 import { stylesLogin, stylesPractice } from "./styles/styles";
 import Login from "./components/Login";
 
-export default function App(): React.JSX.Element {
+export default function App4(): React.JSX.Element {
   const [fullname, setFullname] = useState("");
   const [message, setMessage] = useState("Message from App.tsx");
   const [footerMessage, setFootermessage] = useState(
