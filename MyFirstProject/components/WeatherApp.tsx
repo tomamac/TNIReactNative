@@ -1,5 +1,5 @@
 import {
-    Modal,
+  Modal,
   Pressable,
   StyleSheet,
   Text,
@@ -14,15 +14,16 @@ const WeatherApp = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedCity, setSelectedCity] = useState("");
 
-//   switch (selectedCity) {
-//     case "LONDON":
-//         <WeatherLondon />
-//         break;
-//     case "BANGKOK":
-//         <WeatherBangkok />
-//     default:
-//         break;
-// }
+  const renderWeatherComponent = () => {
+    switch (selectedCity) {
+      case "LONDON":
+        return <WeatherLondon />;
+      case "BANGKOK":
+        return <WeatherBangkok />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -35,7 +36,7 @@ const WeatherApp = () => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => [setModalVisible(true),setSelectedCity("BANGKOK")]}
+        onPress={() => [setModalVisible(true), setSelectedCity("BANGKOK")]}
       >
         <Text style={styles.buttonText}>BANGKOK</Text>
       </TouchableOpacity>
@@ -47,7 +48,7 @@ const WeatherApp = () => {
       >
         <View style={styles.modalBackground}>
           <View style={styles.modalContainer}>
-            <WeatherLondon />
+            {renderWeatherComponent()}
             <Pressable
               style={styles.closeButton}
               onPress={() => setModalVisible(!modalVisible)}
