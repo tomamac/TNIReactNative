@@ -1,10 +1,24 @@
-import { View, Text } from "react-native";
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  FlatList,
+  ListRenderItem,
+} from "react-native";
 import React from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  useNavigation,
+  useRoute,
+  useFocusEffect,
+} from "@react-navigation/native";
+import { findProductbyId } from "../services/product-service";
+import { ListItem, Avatar } from "@rneui/themed";
 
 const DetailScreen = (): React.JSX.Element => {
   const route = useRoute<any>();
   const navigation = useNavigation<any>();
+
+  const [detail, setDetail] = React.useState<any>([]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -12,9 +26,37 @@ const DetailScreen = (): React.JSX.Element => {
     });
   }, [navigation, route]);
 
+  const getProductbyId = async () => {
+    try {
+      const response = await findProductbyId(route.params.id);
+      //console.log(response.data.data);
+      setDetail(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useFocusEffect(
+    React.useCallback(() => {
+      getProductbyId();
+    }, [])
+  );
+  const _renderItem: ListRenderItem<any> = ({ item }) => {
+    return (
+      <>
+        <ListItem.Content>
+          <ListItem.Title>{item.ch_title}</ListItem.Title>
+        </ListItem.Content>
+      </>
+    );
+  };
+
   return (
     <View>
-      <Text>DetailScreen</Text>
+      <FlatList
+        data={detail}
+        keyExtractor={(item: any) => item.ch_id.toString()}
+        renderItem={_renderItem}
+      />
     </View>
   );
 };
