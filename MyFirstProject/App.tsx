@@ -1,16 +1,23 @@
 import { View, Text } from "react-native";
 import React from "react";
-import HomeScreen from "./screens/HomeScreen";
-import AboutScreen from "./screens/AboutScreen";
+
+//navigations
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import CreatePostScreen from "./screens/CreatePostScreen";
-import { HeaderButtonsProvider } from "react-navigation-header-buttons";
-import "react-native-gesture-handler";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import "react-native-gesture-handler";
+
+//screens
+import HomeScreen from "./screens/HomeScreen";
+import AboutScreen from "./screens/AboutScreen";
+import CreatePostScreen from "./screens/CreatePostScreen";
 import MenuScreen from "./screens/MenuScreen";
 import ProductScreen from "./screens/ProductScreen";
+import DetailScreen from "./screens/DetailScreen";
+
+//misc
+import { HeaderButtonsProvider } from "react-navigation-header-buttons";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const HomeStack = createNativeStackNavigator();
 const ProductStack = createNativeStackNavigator();
@@ -46,13 +53,14 @@ function HomeStackScreen() {
 function ProductStackScreen() {
   return (
     <ProductStack.Navigator
-      initialRouteName="Home"
+      initialRouteName="Products"
       screenOptions={{
         headerTitleStyle: { fontWeight: "bold" },
         // headerShown: false,
       }}
     >
       <ProductStack.Screen name="Products" component={ProductScreen} />
+      <ProductStack.Screen name="Details" component={DetailScreen} />
     </ProductStack.Navigator>
   );
 }
@@ -62,9 +70,9 @@ const App = (): React.JSX.Element => {
     <SafeAreaProvider>
       <HeaderButtonsProvider stackType="native">
         <NavigationContainer>
-          <Drawer.Navigator 
-          screenOptions={{headerShown: false}}
-          drawerContent={(props) => <MenuScreen{...props}/>}
+          <Drawer.Navigator
+            screenOptions={{ headerShown: false }}
+            drawerContent={(props) => <MenuScreen {...props} />}
           >
             <Drawer.Screen name="HomeStack" component={HomeStackScreen} />
             <Drawer.Screen name="ProductStack" component={ProductStackScreen} />
