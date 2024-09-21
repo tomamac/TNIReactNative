@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
 //navigations
 import { NavigationContainer } from "@react-navigation/native";
@@ -14,6 +14,7 @@ import CreatePostScreen from "./screens/CreatePostScreen";
 import MenuScreen from "./screens/MenuScreen";
 import ProductScreen from "./screens/ProductScreen";
 import DetailScreen from "./screens/DetailScreen";
+import LoginScreen from "./screens/LoginScreen";
 
 //misc
 import { HeaderButtonsProvider } from "react-navigation-header-buttons";
@@ -21,6 +22,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const HomeStack = createNativeStackNavigator();
 const ProductStack = createNativeStackNavigator();
+const LoginStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 function HomeStackScreen() {
@@ -65,20 +67,44 @@ function ProductStackScreen() {
   );
 }
 
+function LoginStackScreen() {
+  return (
+    <LoginStack.Navigator
+      initialRouteName="Login"
+      screenOptions={{
+        headerTitleStyle: { fontWeight: "bold" },
+        // headerShown: false,
+      }}
+    >
+      <LoginStack.Screen name="Login" component={LoginScreen} />
+    </LoginStack.Navigator>
+  );
+}
+
 const App = (): React.JSX.Element => {
+  const [isLogin] = useState(false);
+
   return (
     <SafeAreaProvider>
-      <HeaderButtonsProvider stackType="native">
-        <NavigationContainer>
-          <Drawer.Navigator
-            screenOptions={{ headerShown: false }}
-            drawerContent={(props) => <MenuScreen {...props} />}
-          >
-            <Drawer.Screen name="HomeStack" component={HomeStackScreen} />
-            <Drawer.Screen name="ProductStack" component={ProductStackScreen} />
-          </Drawer.Navigator>
-        </NavigationContainer>
-      </HeaderButtonsProvider>
+      <NavigationContainer>
+        <HeaderButtonsProvider stackType="native">
+          {isLogin ? (
+            <Drawer.Navigator
+              screenOptions={{ headerShown: false }}
+              drawerContent={(props) => <MenuScreen {...props} />}
+            >
+              <Drawer.Screen name="HomeStack" component={HomeStackScreen} />
+              <Drawer.Screen
+                name="ProductStack"
+                component={ProductStackScreen}
+              />
+              <Drawer.Screen name="LoginStack" component={LoginStackScreen} />
+            </Drawer.Navigator>
+          ) : (
+            <LoginStackScreen />
+          )}
+        </HeaderButtonsProvider>
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 };
