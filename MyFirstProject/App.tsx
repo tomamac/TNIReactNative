@@ -29,11 +29,19 @@ import {
   setProfile,
 } from "./auth/auth-slice";
 import { getProfile } from "./services/auth-service";
+import CameraScreen from "./screens/CameraScreen";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const HomeStack = createNativeStackNavigator();
 const ProductStack = createNativeStackNavigator();
 const LoginStack = createNativeStackNavigator();
+const CameraStack = createNativeStackNavigator();
+const MapStack = createNativeStackNavigator();
+
 const Drawer = createDrawerNavigator();
+
+const Tab = createBottomTabNavigator();
 
 function HomeStackScreen() {
   return (
@@ -91,6 +99,59 @@ function LoginStackScreen() {
   );
 }
 
+function CameraStackScreen() {
+  return (
+    <CameraStack.Navigator
+      initialRouteName="Camera"
+      screenOptions={{
+        headerTitleStyle: { fontWeight: "bold" },
+      }}
+    >
+      <CameraStack.Screen
+        name="Camera"
+        component={CameraScreen}
+        options={{ title: "Camera" }}
+      />
+    </CameraStack.Navigator>
+  );
+}
+
+function TabContainer() {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName = "";
+          if (route.name === "HomeStack") {
+            iconName = focused
+              ? "home"
+              : "home-outline";
+          } else if (route.name === "CameraStack") {
+            iconName = focused ? "camera" : "camera-outline";
+          }
+          // You can return any component that you like here!​
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: "#55AADD",
+        tabBarInactiveTintColor: "gray",
+        headerShown:false,
+      })}
+    >
+      <Tab.Screen
+        name="HomeStack"
+        component={HomeStackScreen}
+        options={{ tabBarLabel: "หน้าหลัก" }}
+      />
+
+      <Tab.Screen
+        name="CameraStack"
+        component={CameraStackScreen}
+        options={{ tabBarLabel: "กล้อง" }}
+      />
+    </Tab.Navigator>
+  );
+}
+
 const App = (): React.JSX.Element => {
   //ใช้ useAppSelector เพื่อดึง state จาก store
   const { isLogin, isLoading } = useAppSelector(selectAuthState);
@@ -104,7 +165,7 @@ const App = (): React.JSX.Element => {
         dispatch(setProfile(response.data.data.user));
         dispatch(setIsLogin(true));
       } else {
-        dispatch(setIsLogin(false));
+        dispatch(setIsLogin(true));
       }
     } catch (error) {
       console.log(error);
@@ -133,7 +194,7 @@ const App = (): React.JSX.Element => {
           screenOptions={{ headerShown: false }}
           drawerContent={(props) => <MenuScreen {...props} />}
         >
-          <Drawer.Screen name="HomeStack" component={HomeStackScreen} />
+          <Drawer.Screen name="Home" component={TabContainer} />
           <Drawer.Screen name="ProductStack" component={ProductStackScreen} />
           <Drawer.Screen name="LoginStack" component={LoginStackScreen} />
         </Drawer.Navigator>
