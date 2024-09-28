@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet, Alert } from "react-native";
+import { View, Button, StyleSheet } from "react-native";
 import React, { useLayoutEffect } from "react";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
@@ -9,6 +9,12 @@ import {
   Item,
 } from "react-navigation-header-buttons";
 
+import { Text } from "@rneui/base";
+
+import { useAppDispatch, useAppSelector } from "../redux-toolkit/hooks";
+import { logout } from "../services/auth-service";
+import { selectAuthState, setIsLogin } from "../auth/auth-slice";
+
 const MaterialHeaderButton = (props: any) => (
   // the `props` here come from <Item ... />
   // you may access them and pass something else to `HeaderButton` if you like
@@ -17,6 +23,8 @@ const MaterialHeaderButton = (props: any) => (
 
 const HomeScreen = (): React.JSX.Element => {
   const navigation = useNavigation<any>();
+  const dispatch = useAppDispatch();
+  const { profile } = useAppSelector(selectAuthState);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -33,17 +41,19 @@ const HomeScreen = (): React.JSX.Element => {
             }}
           />
         </HeaderButtons>
-      ),headerRight: () => (
+      ),
+      headerRight: () => (
         <HeaderButtons HeaderButtonComponent={MaterialHeaderButton}>
           <Item
             title="logout"
             iconName="logout"
-            onPress={() => {
-              Alert.alert("Log out", "Close Menu", [{ text: "OK" }]);
+            onPress={async () => {
+              await logout();
+              dispatch(setIsLogin(false));
             }}
           />
         </HeaderButtons>
-      )
+      ),
     });
   }, [navigation]);
   const gotoAbout = () => {
@@ -60,7 +70,15 @@ const HomeScreen = (): React.JSX.Element => {
   return (
     <View style={styles.container}>
       <MaterialIcon name="home" size={40} color="orange" />
-      <Text style={styles.header}>HomeScreen</Text>
+      {profile ? (
+        <>
+          <Text h3> Welcome {profile.name}</Text>
+          <Text>
+            Email: {profile.email} ID: {profile.ig} Role:
+            {profile.role}
+          </Text>
+        </>
+      ) : null}
       <Button title="About us" onPress={gotoAbout} />
     </View>
   );
